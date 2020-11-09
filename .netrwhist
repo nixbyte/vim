@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/nixbyte/.config'
+let g:netrw_dirhist_2='/home/nixbyte/.config/awesome'
+let g:netrw_dirhist_3='/home/nixbyte/.oh-my-zsh'
+let g:netrw_dirhist_4='/home/nixbyte/.vim/bundle/vim-colorschemes/colors'
+let g:netrw_dirhist_5='/home/nixbyte/.config/awesome'
+let g:netrw_dirhist_6='/home/nixbyte/.config/i3'
+let g:netrw_dirhist_7='/home/nixbyte/.config'
+let g:netrw_dirhist_8='/home/nixbyte/.config/i3'
+let g:netrw_dirhist_9='/home/nixbyte/docker'
