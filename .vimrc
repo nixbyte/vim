@@ -90,9 +90,11 @@ let g:go_highlight_function_calls = 1
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_fmt_experimental = 1
+let g:go_metalinter_enable = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave_enable = ['vet', 'golint']
+let g:go_metalinter_deadline = "5s"
 
-
-
+autocmd FileType go inoremap <buffer> . .<C-x><C-o>
 
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
