@@ -12,12 +12,18 @@ filetype plugin indent on
 
 "Репозитории на github
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'flazz/vim-colorschemes'
 Plugin 'fatih/vim-go'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+
+"NerdTree plugin
+Plugin 'preservim/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plugin 'scrooloose/nerdtree-project-plugin'
+Plugin 'PhilRunninger/nerdtree-buffer-ops'
 
 "Репозитории vim/scripts
 Plugin 'ascenator/L9'
@@ -41,8 +47,6 @@ filetype plugin indent on
 " see :h vundle for more details or wiki for FAQ
 " Put your non -Plugin stuff after this line
 "----------------------------------------------
-
-:set t_Co=256
 
 set tabstop=2
 set shiftwidth=2
@@ -69,7 +73,32 @@ set hidden
 
 set langmap=!\\"№\\;%?*ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕHГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;!@#$%&*`qwertyuiop[]asdfghjkl\\;'zxcvbnm\\,.~QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>
 
-nmap <silent> <S-f> <Plug>ToggleProject
+
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <leader>c :NERDTreeToggle<CR>
+nnoremap <leader>f :NERDTreeFind<CR>
+
+
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+"autocmd VimEnter * NERDTree
+
+" Start NERDTree and put the cursor back in the other window.
+autocmd VimEnter * NERDTree | wincmd p
+"
+" Start NERDTree when Vim is started without file arguments.
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+
+" Start NERDTree. If a file is specified, move the cursor to its window.
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+
 
 "vim-go plugin--------------------------------------"
 let mapleader = ","
@@ -129,9 +158,9 @@ let g:airline#extensions#tabline#formatter = 'default'
 
  "Установка заднего фона
  syntax on
- colorscheme CandyPaper
+ colorscheme Atelier_SavannaDark 
 " color blue
-"set background=light
+"set background=dark
 "set t_Co=256
 " highlight Normal ctermbg=Black  ctermfg=White
  "Включаем мышку
@@ -139,4 +168,18 @@ let g:airline#extensions#tabline#formatter = 'default'
  "Всегда отображать статусную строку для каждого окна
  set laststatus=2
 
-
+function! CleverTab()
+  if pumvisible()
+    return "\<C-N>"
+  endif
+  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+    return "\<Tab>"
+  elseif exists('&omnifunc') && &omnifunc != ''
+    return "\<C-X>\<C-O>"
+  else
+    return "\<C-N>"
+  endif
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
+set completeopt=longest,menuone
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
